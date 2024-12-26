@@ -63,7 +63,7 @@
 
 ---
 
-## Example Output
+## Output Display
 When movements are detected, the following feedback is displayed on the screen:
 1. **Difference in Position (`dif`)**: The change in x and y coordinates.
 2. **Distance (`dis`)**: The Euclidean distance between the current and previous positions.
