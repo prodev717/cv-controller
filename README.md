@@ -1,51 +1,66 @@
 # CV Controller
 
-**CV Controller** is an innovative computer vision project that transforms physical movements detected via a webcam into keyboard inputs (W, A, S, D) to control games. By leveraging **OpenCV**, **Mediapipe**, and **keyboard**, this project allows users to simulate directional controls through body movements, making gaming hands-free and interactive.
+**CV Controller** is an innovative computer vision project that transforms physical movements detected via a webcam into interactive controls for gaming and desktop navigation. By leveraging **OpenCV**, **Mediapipe**, and **pyautogui**, this project offers two main functionalities:
+- Hands-free directional controls using body movements.
+- Mouse control through hand gestures, complete with drag-and-drop support.
 
 ---
 
 ## Features
-- **Real-Time Movement Detection**:
-  - Tracks body movements using Mediapipe's Pose module.
-  - Detects directional motion (up, down, left, right) based on keypoint displacement.
-  
-- **Dynamic Game Controls**:
-  - Simulates keyboard presses (`W`, `A`, `S`, `D`) corresponding to the detected movement direction.
-  - Supports smooth, real-time control for games or applications requiring directional input.
+### 1. **Real-Time Movement Detection**
+- Tracks body movements using Mediapipe's Pose module.
+- Detects directional motion (up, down, left, right) based on keypoint displacement.
 
-- **Customizable Sensitivity**:
-  - Includes a threshold parameter to adjust the sensitivity of movement detection.
+### 2. **Dynamic Game Controls**
+- Simulates keyboard presses (`W`, `A`, `S`, `D`) corresponding to detected movement direction.
+- Supports smooth, real-time control for games or applications requiring directional input.
+
+### 3. **Mouse Control with Hand Gestures**
+- Tracks hand movements using Mediapipe's Hand module.
+- Converts wrist position into mouse movements with adjustable acceleration.
+- Detects hand closure to enable drag-and-drop functionality:
+  - **Hand Closed**: Activates drag mode.
+  - **Hand Open**: Releases drag mode.
 
 ---
 
 ## How It Works
+### Game Controls:
 1. **Input via Webcam**:
-   - The webcam captures real-time video feed, which is processed to identify body landmarks.
-
+   - Captures real-time video feed for body landmark tracking.
 2. **Landmark Tracking**:
-   - The Mediapipe Pose solution identifies body landmarks, focusing on the nose as the primary movement point.
-
+   - Uses the nose as the primary movement point.
 3. **Direction Detection**:
-   - Compares the current and previous positions of the tracked landmark to calculate movement direction:
-     - **Up (`W`)**: If the nose moves upward.
-     - **Down (`S`)**: If the nose moves downward.
-     - **Left (`A`)**: If the nose moves left.
-     - **Right (`D`)**: If the nose moves right.
-
+   - Calculates movement direction based on the nose's position changes:
+     - **Up (`W`)**: Nose moves upward.
+     - **Down (`S`)**: Nose moves downward.
+     - **Left (`A`)**: Nose moves left.
+     - **Right (`D`)**: Nose moves right.
 4. **Simulated Keyboard Input**:
-   - Translates the detected direction into corresponding keyboard presses using the `keyboard` library.
+   - Sends the detected direction as a keyboard press using the `keyboard` library.
 
-5. **Visual Feedback**:
-   - Displays movement details (e.g., distance, direction) on the video feed for real-time debugging and feedback.
+### Hand Mouse Control:
+1. **Hand Detection**:
+   - Tracks hand landmarks using Mediapipe's Hands solution.
+2. **Mouse Movement**:
+   - Maps wrist movements to mouse cursor movements, with configurable acceleration:
+     - **Acceleration Factor**: Adjusts cursor speed based on hand velocity.
+3. **Drag-and-Drop**:
+   - Detects hand closure to enable drag-and-drop:
+     - **Mouse Down**: Hand closes.
+     - **Mouse Up**: Hand opens.
 
 ---
 
 ## Key Components
 - **OpenCV**:
-  - Used for video feed capture and real-time visualization.
+  - Handles video feed capture and real-time visualization.
   
 - **Mediapipe**:
-  - Pose estimation to track body landmarks.
+  - Provides landmark detection for hands and pose estimation.
+
+- **PyAutoGUI**:
+  - Simulates mouse movements, clicks, and drag-and-drop functionality.
 
 - **Keyboard Library**:
   - Simulates keyboard inputs for directional control.
@@ -54,8 +69,12 @@
 
 ## Use Cases
 - **Gaming**:
-  - Control games using body movements for an immersive, hands-free experience.
-  
+  - Hands-free gaming using directional controls.
+- **Accessibility**:
+  - Use hand gestures to replace traditional mouse functions.
+- **Interactive Applications**:
+  - Intuitive interaction with desktop environments.
+
 ---
 
 ## How to Quit
@@ -64,16 +83,19 @@
 ---
 
 ## Output Display
-When movements are detected, the following feedback is displayed on the screen:
-1. **Difference in Position (`dif`)**: The change in x and y coordinates.
-2. **Distance (`dis`)**: The Euclidean distance between the current and previous positions.
-3. **Movement (`mov`)**: The detected movement direction (`w`, `a`, `s`, or `d`).
+1. **Game Controls**:
+   - Displays movement details, such as position differences (`dif`), distance (`dis`), and movement direction (`mov`) on the video feed.
+2. **Hand Mouse Control**:
+   - Visualizes hand landmarks and tracks wrist position on the video feed.
 
 ---
 
 ## Notes
-- The project is configured to detect movements using the nose landmark (`nodes[0]`), but it can be adjusted for other landmarks if needed.
-- The threshold for movement detection can be modified via the `thresh` variable.
+- The hand mouse control feature is designed for single-hand tracking.
+- Adjustable parameters:
+  - **Acceleration (`acc`)**: Controls cursor speed for normal movements.
+  - **Drag Acceleration (`accd`)**: Adjusts speed during drag-and-drop.
+  - **Hand Closure Sensitivity (`close`)**: Defines the threshold for detecting a closed hand.
 
 ---
 

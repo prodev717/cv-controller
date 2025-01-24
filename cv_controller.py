@@ -30,11 +30,11 @@ while camera.isOpened():
             elif abs(dif[0]) > thresh and dis > thresh:
                 movement = "d" if dif[0] > 0 else "a"
             else:
-            	movement = None
+                movement = None
             if movement!= None:
-            	keyboard.press(movement)
-            	print(movement)
-            	keyboard.release(movement)
+                keyboard.press(movement)
+                print(movement)
+                keyboard.release(movement)
             cv2.putText(frame, f"dif : {dif[0]} , {dif[1]}", (30, 30), cv2.FONT_HERSHEY_DUPLEX, 0.7, (0, 255, 255), 2)
             cv2.putText(frame, f"dis : {dis:.2f}", (30, 60), cv2.FONT_HERSHEY_DUPLEX, 0.7, (0, 255, 255), 2)
             cv2.putText(frame, f"mov : {movement}", (30, 90), cv2.FONT_HERSHEY_DUPLEX, 0.7, (0, 255, 255), 2)
