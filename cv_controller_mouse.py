@@ -1,12 +1,14 @@
 import cv2
 import mediapipe as mp
 import pyautogui
+import pydirectinput
 from math import dist
 
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(max_num_hands=1, min_detection_confidence=0.7, min_tracking_confidence=0.7)
 mp_draw = mp.solutions.drawing_utils
-pyautogui.FAILSAFE = False  
+pydirectinput.PAUSE = 0  
+pydirectinput.FAILSAFE = False
 prev_x, prev_y = 0, 0
 prev_dx, prev_dy = 0, 0
 screen_width, screen_height = pyautogui.size()
@@ -14,6 +16,7 @@ screen_width, screen_height = pyautogui.size()
 acc = 0.9 
 accd = 0.4
 close = 0.12
+smooth = 0.8
 dragging = False
 
 def is_hand_closed(hand_landmarks):
@@ -46,23 +49,23 @@ while cap.isOpened():
                 else:
                     scaled_dx = dx * (1 + abs(velocity_x) * acc)
                     scaled_dy = dy * (1 + abs(velocity_y) * acc)
-                pyautogui.moveRel(scaled_dx, scaled_dy)
+                pydirectinput.moveRel(int(smooth*scaled_dx), int(smooth*scaled_dy))
                 prev_dx, prev_dy = dx, dy
             prev_x, prev_y = cur_x, cur_y 
             if is_hand_closed(hand_landmarks):
                 if not dragging:
-                    pyautogui.mouseDown()
+                    pydirectinput.mouseDown()
                     dragging = True
             else:
                 if dragging:
-                    pyautogui.mouseUp()
+                    pydirectinput.mouseUp()
                     dragging = False
             mp_draw.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
     else:
         prev_x, prev_y = 0, 0  
         prev_dx, prev_dy = 0, 0  
 
-    cv2.imshow("Hand Mouse Control (Acceleration)", cv2.resize(frame,(1300,900)))
+    cv2.imshow("Hand Mouse Control (Acceleration)", frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 

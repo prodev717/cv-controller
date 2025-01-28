@@ -1,6 +1,6 @@
 # CV Controller
 
-**CV Controller** is an innovative computer vision project that transforms physical movements detected via a webcam into interactive controls for gaming and desktop navigation. By leveraging **OpenCV**, **Mediapipe**, and **pyautogui**, this project offers two main functionalities:
+**CV Controller** is an innovative computer vision project that transforms physical movements detected via a webcam into interactive controls for gaming and desktop navigation. By leveraging **OpenCV**, **Mediapipe**, and **pydirectinput**, this project offers two main functionalities:
 - Hands-free directional controls using body movements.
 - Mouse control through hand gestures, complete with drag-and-drop support.
 
@@ -37,7 +37,7 @@
      - **Left (`A`)**: Nose moves left.
      - **Right (`D`)**: Nose moves right.
 4. **Simulated Keyboard Input**:
-   - Sends the detected direction as a keyboard press using the `keyboard` library.
+   - Sends the detected direction as a keyboard press using the `pydirectinput` library.
 
 ### Hand Mouse Control:
 1. **Hand Detection**:
@@ -59,10 +59,8 @@
 - **Mediapipe**:
   - Provides landmark detection for hands and pose estimation.
 
-- **PyAutoGUI**:
+- **PyDirectInput**:
   - Simulates mouse movements, clicks, and drag-and-drop functionality.
-
-- **Keyboard Library**:
   - Simulates keyboard inputs for directional control.
 
 ---

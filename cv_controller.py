@@ -1,7 +1,7 @@
 import cv2
 from math import dist
 import mediapipe as mp
-import keyboard
+import pydirectinput
 
 camera = cv2.VideoCapture(0)
 mp_pose = mp.solutions.pose.Pose()
@@ -32,9 +32,9 @@ while camera.isOpened():
             else:
                 movement = None
             if movement!= None:
-                keyboard.press(movement)
+                pydirectinput.keyDown(movement)
                 print(movement)
-                keyboard.release(movement)
+                pydirectinput.keyUp(movement)
             cv2.putText(frame, f"dif : {dif[0]} , {dif[1]}", (30, 30), cv2.FONT_HERSHEY_DUPLEX, 0.7, (0, 255, 255), 2)
             cv2.putText(frame, f"dis : {dis:.2f}", (30, 60), cv2.FONT_HERSHEY_DUPLEX, 0.7, (0, 255, 255), 2)
             cv2.putText(frame, f"mov : {movement}", (30, 90), cv2.FONT_HERSHEY_DUPLEX, 0.7, (0, 255, 255), 2)
