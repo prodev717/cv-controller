@@ -5,6 +5,7 @@ import pydirectinput
 
 camera = cv2.VideoCapture(0)
 mp_pose = mp.solutions.pose.Pose()
+mp_draw = mp.solutions.drawing_utils
 
 prev = None
 movement = "NONE"
@@ -39,7 +40,7 @@ while camera.isOpened():
             cv2.putText(frame, f"dis : {dis:.2f}", (30, 60), cv2.FONT_HERSHEY_DUPLEX, 0.7, (0, 255, 255), 2)
             cv2.putText(frame, f"mov : {movement}", (30, 90), cv2.FONT_HERSHEY_DUPLEX, 0.7, (0, 255, 255), 2)
         prev = current
-        cv2.circle(frame, current, 50, (255, 0, 0), 2)
+        mp_draw.draw_landmarks(frame,result.pose_landmarks,mp.solutions.pose.POSE_CONNECTIONS)
     cv2.imshow("cv controller", frame)
     
     if cv2.waitKey(1) == ord("q"):
